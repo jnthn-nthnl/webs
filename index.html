@@ -1,21 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebView JavaScript Interface Test</title>
+</head>
+
 <body>
-<h3>WebView Interface Test</h3>
+  <h2>WebView JavaScript Interface Test</h2>
+  <p>Check console logs for results.</p>
 
-<script>
-  console.log("Page loaded");
+  <script>
+    console.log("=== WebView Test Started ===");
+    console.log("Page loaded successfully");
 
-  // Check if interface exists
-  console.log("Interface object:", window.INTERFACE_NAME);
+    /*
+     * IMPORTANT:
+     * Replace ANDROID_INTERFACE with the real interface name
+     * (value of c0058v.f473a)
+     *
+     * Example:
+     * const iface = window.Android;
+     * const iface = window.flutter_inappwebview;
+     */
 
-  if (window.INTERFACE_NAME) {
-    console.log("Interface is exposed");
-  } else {
-    console.log("Interface not exposed");
-  }
-</script>
+    const iface = window.Android; // <-- CHANGE THIS
+
+    if (iface) {
+      console.log("[+] JavaScript interface is EXPOSED:", iface);
+
+      try {
+        iface.postMessage("WebView security test message");
+        console.log("[+] postMessage() successfully invoked");
+      } catch (e) {
+        console.log("[-] Interface exists but method call failed:", e);
+      }
+
+    } else {
+      console.log("[-] JavaScript interface NOT found");
+    }
+
+    console.log("=== WebView Test Finished ===");
+  </script>
 
 </body>
 </html>
-
